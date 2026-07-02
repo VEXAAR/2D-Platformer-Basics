@@ -13,15 +13,13 @@ public class PlayerAnimator : MonoBehaviour
     [SerializeField] private string die;
     [SerializeField] private string dash;
     
-    private string currentlyPlaying;
-    private bool forceAnim;
-    private SpriteRenderer sprite; // SpriteRenderer variabel som blir satt i Start()
-    private Animator anim;
-    private PlayerController player;
+    private string currentlyPlaying; // Namnet på animationen som spelas just nu.
+    private bool forceAnim; // Stoppar andra animationer från att spela tills nuvarande animation är klar.
+    private Animator anim; // Animator referensen som blir satt i Start()
+    private PlayerController player; // PlayerController referensen som blir satt i Start()
     
     void Start()
     {
-        sprite = GetComponent<SpriteRenderer>(); // Få en referens till spelarobjektets SpriteRenderer komponent och sätt variabeln 'sprite' till detta.
         anim = GetComponent<Animator>();
         player = GetComponent<PlayerController>();
     }
@@ -31,19 +29,19 @@ public class PlayerAnimator : MonoBehaviour
     void Update()
     {
         if (player.grounded && MathF.Abs(player.velocity.x) > 0.1f) Animate("walk"); // Spelaren är på marken och har en absolut hastighet av mer än 0.1 
-        else if (player.velocity.x > player.moveSpeed) Animate("dash"); // Om spelaren rör sig snabbare än deras topphastighet.
-        else if (player.velocity.y > 0) Animate("jump"); // Om spelaren rör sig uppåt.
-        else if (player.velocity.y < 0) Animate("fall"); // Om spelaren faller nedåt.
-        else Animate("idle");
+        else if (Mathf.Abs(player.velocity.x) > player.moveSpeed) Animate("dash"); // Om spelaren rör sig snabbare än deras topphastighet.
+        else if (!player.grounded) Animate("fall"); // Om spelaren faller nedåt.
+        else Animate("idle"); // Om inget annat, så är spelaren idle.
     }
     
+    // Kan bli kallad för att animera spelaren.
     public void Animate(string animation)
     {
-        if (animation == currentlyPlaying || forceAnim) return;
-
+        if (animation == currentlyPlaying || (forceAnim && animation != "jump" && animation != "die")) return; // Spelar inte animation om samma spelas redan eller om det spelas en animation som måste bli klar
+                                                                                                               // Detta gäller inte "jump" och "die", som måste spelas oavsett.
         currentlyPlaying = animation;
 
-        switch (animation)
+        switch (animation) // En switch case operation som matchar "animation" variabeln till en string.
         {
             case "idle":
             PlayAnimation(idle);
@@ -52,7 +50,7 @@ public class PlayerAnimator : MonoBehaviour
             PlayAnimation(walk);
                 break;
             case "jump":
-            PlayAnimation(jump);
+            PlayAnimation(jump, false);
                 break;
             case "fall":
             PlayAnimation(fall);
@@ -66,25 +64,26 @@ public class PlayerAnimator : MonoBehaviour
         }
     }
 
+    // Spelar en animation och ifall den inte är loopande så stoppar den andra animationer från att spela tills den är klar.
     private void PlayAnimation(string animation, bool looping = true)
     {
         anim.Play(animation); // Spelar den givna animationen.
 
-        if (!looping)
+        if (!looping) // Om det inte är en loopande animation så tvingas den köra tills den är slut.
         {
-            IEnumerator WaitForAnimation() // Enumerator metod, se PlayerScript för mer information.
-            {
-                forceAnim = true; // Tvingar denna animation att spela klart innan en ny kan börja.
-
-                while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1) // Väntar på att animationen är klar.
-                {
-                    yield return null;
-                }
-
-                forceAnim = false;
-            }
-
-            StartCoroutine(WaitForAnimation()); // Startar coroutinen.
+            forceAnim = true;
         }
+    }
+
+    // När en ickeloopande animation är klar kallar den på denna funktion som säger till scriptet att andra animationer nu får spela. Om animationen var "die" så respawnar spelaren även.
+    public void AnimationFinished()
+    {
+        if (currentlyPlaying == "die") // Om animationen var "die" så respawnar spelaren.
+        {
+            player.Respawn();
+            GetComponent<Health>().Respawn(); // Hittar Health komponenten och kallar Respawn() på den.
+        }
+
+        forceAnim = false;
     }
 }

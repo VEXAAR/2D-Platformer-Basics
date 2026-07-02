@@ -28,10 +28,10 @@ public class Health : MonoBehaviour
     // Blir kallad när health blir 0 (eller mindre)
     void Die()
     {
-        if (GetComponentInParent<PlayerController>())
+        if (GetComponent<PlayerController>())
         {
-            GetComponentInParent<PlayerAnimator>().Animate("die");
-            GetComponentInParent<PlayerController>().Die();
+            GetComponent<PlayerAnimator>().Animate("die");
+            GetComponent<PlayerController>().Die();
         }
     }
 
@@ -40,12 +40,12 @@ public class Health : MonoBehaviour
     {
         if (respawnPoint)
         {
-            GetComponentInParent<Rigidbody2D>().position = respawnPoint.transform.position;
+            GetComponent<Rigidbody2D>().position = respawnPoint.transform.position;
         }
 
         else
         {
-            GetComponentInParent<Rigidbody2D>().position = Vector3.zero;
+            GetComponent<Rigidbody2D>().position = Vector3.zero;
         }
     }
 }

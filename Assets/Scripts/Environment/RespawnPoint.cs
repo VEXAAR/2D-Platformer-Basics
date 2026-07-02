@@ -5,6 +5,10 @@ public class RespawnPoint : MonoBehaviour
     [Tooltip("I vilken ordning alla checkpoints kommer i")]
     public int ordering; // Om spelaren aktiverar 0, sedan 1, sedan går till 0 igen så behålls deras respawn vid den med högre tal.
     // (Om alla är samma siffra så blir den spelaren var vid senast den man respawnar vid)
+    [Tooltip("Namnet på aktiveringsanimationen")]
+    [SerializeField] private string activateAnimation;
+    [Tooltip("Namnet på on animationen")]
+    [SerializeField] private string onAnimation;
 
     private bool active; // Om denna RespawnPoint är aktiverad. (Om aktiveringsanimationen har spelats)
 
@@ -18,7 +22,7 @@ public class RespawnPoint : MonoBehaviour
             Activate();
         }
 
-        Health health = collision.GetComponentInChildren<Health>(); // Får komponenten "Health" hos ett barn till spelarobjektet.
+        Health health = collision.GetComponent<Health>(); // Får komponenten "Health" hos spelarobjektet.
 
         if (!health.respawnPoint || health.respawnPoint.ordering <= ordering) // Om spelaren inte har en RespawnPoint, eller om denna RespawnPoint har högre eller lika
         {                                                                     // ordering än den som spelaren har satt.
@@ -28,9 +32,15 @@ public class RespawnPoint : MonoBehaviour
     }
 
     // Spelar en aktiveringsanimation.
-    void Activate()
+    private void Activate()
     {
         active = true;
-        return;
+        
+        GetComponent<Animator>().Play(activateAnimation);
+    }
+
+    public void SetOn()
+    {
+        GetComponent<Animator>().Play(onAnimation);
     }
 }

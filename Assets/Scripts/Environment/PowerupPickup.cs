@@ -19,6 +19,8 @@ public class PowerupPickup : MonoBehaviour
             PlayerController player = collider.GetComponent<PlayerController>();
 
             GivePowerup(player);
+
+            Destroy(gameObject);
         }
     }
 
@@ -33,5 +35,7 @@ public class PowerupPickup : MonoBehaviour
                 player.extraJumps += 1;
                 break;
         }
+
+        FindAnyObjectByType<PowerupsUI>().SetPowerupIcons();
     }
 }
