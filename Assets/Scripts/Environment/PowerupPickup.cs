@@ -7,9 +7,18 @@ public class PowerupPickup : MonoBehaviour
     {
         DOUBLEJUMP,
         DASH,
+        WALLJUMP,
     }
 
     [SerializeField] private Powerup powerupType;
+    [SerializeField] private string announceText;
+
+    private AnnouncementUI announce;
+
+    void Start()
+    {
+        announce = FindAnyObjectByType<AnnouncementUI>();
+    }
 
 
     void OnTriggerEnter2D(Collider2D collider)
@@ -34,8 +43,12 @@ public class PowerupPickup : MonoBehaviour
             case Powerup.DOUBLEJUMP:
                 player.extraJumps += 1;
                 break;
+            case Powerup.WALLJUMP:
+                player.wallJumpAbility = true;
+                break;
         }
 
+        announce.SetText(announceText);
         FindAnyObjectByType<PowerupsUI>().SetPowerupIcons();
     }
 }

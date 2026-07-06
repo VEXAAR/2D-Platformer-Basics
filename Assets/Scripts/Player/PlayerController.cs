@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     [Tooltip("Hur stor groundCheck cirkeln ska vara")]
     [SerializeField] private float checkSize = 0.1f;
 
-    public Vector2 velocity; // En Vector2 som berättar spelarens hastighet i x (vänster/höger) och y (ner/upp).
+    [HideInInspector] public Vector2 velocity; // En Vector2 som berättar spelarens hastighet i x (vänster/höger) och y (ner/upp).
     private Rigidbody2D rb; // Rigidbody2D variabel som blir satt i Start()
     private PlayerAnimator pAnim; // PlayerAnimator scriptet som sitter på spelaren.
 
@@ -54,7 +54,10 @@ public class PlayerController : MonoBehaviour
     private int jumpAmount; // Räknar hur många gånger spelaren kan hoppa.
     private int dashAmount; // Räknar hur många gånger spelaren kan använda dash.
     private float dashCooldown; // En timer som tickar ner efter man använt dash så att man inte kan spamma den.
+    [Tooltip("Om spelaren kan vägghoppa")]
     public bool wallJumpAbility;
+    [Tooltip("Hur länge efter ett vägghopp man kan börja kontrollera spelaren igen")]
+    [SerializeField] private float wallJumpInputReactivateTime = 0.2f;
     private bool walled;
     private bool wallJumping;
 
@@ -188,7 +191,7 @@ public class PlayerController : MonoBehaviour
         velocity.y = jumpPower;
         velocity.x = facingRight ? -jumpPower : jumpPower;
         pAnim.Animate("jump");
-        Invoke("WallJumpInputReactivate", 0.1f);
+        Invoke("WallJumpInputReactivate", wallJumpInputReactivateTime); // Kallar "WallJumpInputReactivate" metoden efter en bestämd tid har gått.
     }
 
     private void WallJumpInputReactivate()
@@ -212,7 +215,7 @@ public class PlayerController : MonoBehaviour
         {
             velocity *= 0.8f;
         }
-        else if (walled || (velocity.y > 0 && ceilingTouch)) // Om spelaren rör sig uppåt och de tar i taket, så slutar de ha momentum uppåt.
+        else if ((walled && !wallJumping) || (velocity.y > 0 && ceilingTouch)) // Om spelaren står mot väggen och vägghoppar inte ELLER rör sig uppåt och de tar i taket, så slutar de ha momentum uppåt.
         {
             velocity.y = 0f;
         }
@@ -225,7 +228,7 @@ public class PlayerController : MonoBehaviour
             velocity.y -= gravity * Time.fixedDeltaTime;
         }
 
-        if (Mathf.Abs(velocity.x) > 0 && wallTouch)
+        if (Mathf.Abs(velocity.x) > 0 && wallTouch && !wallJumping) // Om spelaren rör sig sidledes och tar i väggen OCH de vägghoppar inte.
         {
             velocity.x = 0f;
         }

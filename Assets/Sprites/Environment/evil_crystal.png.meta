@@ -134,8 +134,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 14, y: -6}
+        - {x: 7, y: 4}
+        - {x: 2, y: 13}
+        - {x: -2, y: 13}
+        - {x: -7, y: 4}
+        - {x: -14, y: -6}
+        - {x: -12, y: -16}
+        - {x: 11, y: -16}
+      tessellationDetail: 0
       bones: []
       spriteID: ff1e7f76913938b70800000000000000
       internalID: 8900119025941996031
@@ -156,8 +164,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 16, y: -11}
+        - {x: 16, y: 11}
+        - {x: 6, y: 14}
+        - {x: -4, y: 7}
+        - {x: -13, y: 2}
+        - {x: -13, y: -2}
+        - {x: -4, y: -7}
+        - {x: 6, y: -14}
+      tessellationDetail: 0
       bones: []
       spriteID: e398fc50eb2c8b2b0800000000000000
       internalID: -5568486817846556354
@@ -178,8 +194,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 13, y: -2}
+        - {x: 13, y: 2}
+        - {x: 4, y: 7}
+        - {x: -8, y: 14}
+        - {x: -16, y: 12}
+        - {x: -16, y: -11}
+        - {x: -9, y: -14}
+        - {x: 4, y: -7}
+      tessellationDetail: 0
       bones: []
       spriteID: c8df38b5395bcd900800000000000000
       internalID: 710642485717892492
@@ -200,8 +224,16 @@ TextureImporter:
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 7, y: -4}
+        - {x: 14, y: 6}
+        - {x: 11, y: 16}
+        - {x: -11, y: 16}
+        - {x: -14, y: 6}
+        - {x: -7, y: -4}
+        - {x: -2, y: -13}
+        - {x: 2, y: -13}
+      tessellationDetail: 0
       bones: []
       spriteID: 36d2e45f26ce1a8a0800000000000000
       internalID: -6295490894320751261

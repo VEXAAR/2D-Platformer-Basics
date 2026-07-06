@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7797675673249048820}
   - component: {fileID: 7644478544100918609}
   m_Layer: 0
-  m_Name: DJumpPickup
+  m_Name: WallJumpPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,8 +46,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd36577a49c8544b993f81d6fb01eb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerupPickup
-  powerupType: 0
-  announceText: +1 Jump (Press SPACE in air)
+  powerupType: 2
+  announceText: Walljump unlocked (Press against a wall and jump)
 --- !u!212 &7797675673249048820
 SpriteRenderer:
   serializedVersion: 2
@@ -97,7 +97,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -3254420861325359341, guid: 5de6c47c9370bbf448b07169090495bf, type: 3}
+  m_Sprite: {fileID: 6644976600508938569, guid: b3f475d45bbd1264aa01bd175a6fde6c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

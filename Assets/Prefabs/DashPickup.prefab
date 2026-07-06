@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PowerupPickup
   powerupType: 1
+  announceText: +1 Dash (Press SHIFT to Dash)
 --- !u!212 &8631073096413740817
 SpriteRenderer:
   serializedVersion: 2
