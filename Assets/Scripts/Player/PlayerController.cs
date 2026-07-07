@@ -184,16 +184,18 @@ public class PlayerController : MonoBehaviour
         pAnim.Animate("jump");
     }
 
+    // Kastar ut spelaren från väggen, och stänger av inputs under en kort stund.
     private void WallJump()
     {
         wallJumping = true;
         grounded = false;
         velocity.y = jumpPower;
-        velocity.x = facingRight ? -jumpPower : jumpPower;
+        velocity.x = facingRight ? -jumpPower : jumpPower; // En "ternary operator" (Om "facingRight är true, så blir velocity.x = -jumpPower, annars blir det bara jumpPower)
         pAnim.Animate("jump");
         Invoke("WallJumpInputReactivate", wallJumpInputReactivateTime); // Kallar "WallJumpInputReactivate" metoden efter en bestämd tid har gått.
     }
 
+    // Aktiverar inputs efter ett vägghopp.
     private void WallJumpInputReactivate()
     {
         wallJumping = false;
@@ -211,7 +213,7 @@ public class PlayerController : MonoBehaviour
     // Ger spelaren gravitation och sedan sätter 'rb' (Rigidbody2D)s linjära hastighet till 'velocity' variablen.
     private void ApplyVelocity()
     {
-        if (disabled)
+        if (disabled) // Om spelaren är avstängd (död) saktar dem ner.
         {
             velocity *= 0.8f;
         }
@@ -248,6 +250,7 @@ public class PlayerController : MonoBehaviour
         disabled = false;
     }
 
+    // Ritar Gizmos för att göra editing lättare.
     void OnDrawGizmos()
     {
         Gizmos.DrawWireSphere(groundCheck.position, checkSize);

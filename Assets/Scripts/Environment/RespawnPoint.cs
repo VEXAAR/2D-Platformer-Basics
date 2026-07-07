@@ -36,9 +36,10 @@ public class RespawnPoint : MonoBehaviour
     {
         active = true;
         
-        GetComponent<Animator>().Play(activateAnimation);
+        GetComponent<Animator>().Play(activateAnimation); // Spelar animationen på animatorn
     }
 
+    // När animationen är slut så startar en ny statisk sprite visas.
     public void SetOn()
     {
         GetComponent<Animator>().Play(onAnimation);

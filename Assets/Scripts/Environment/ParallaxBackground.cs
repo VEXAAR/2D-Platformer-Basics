@@ -12,16 +12,16 @@ public class ParallaxBackground : MonoBehaviour
 
     void Start()
     {
-        startPos = transform.position;
+        startPos = transform.position; // Sätter startpositionen till objektets position vid start.
 
         cam = Camera.main; // Hittar kameran som används.
     }
 
     void LateUpdate()
     {
-        float distX = cam.transform.position.x * horizontalAmount;
+        float distX = cam.transform.position.x * horizontalAmount; // Räknar ut hur mycket objektet bör flyttas med.
         float distY = cam.transform.position.y * verticalAmount;
 
-        transform.position = new Vector3(startPos.x + distX, startPos.y + distY, startPos.z);
+        transform.position = new Vector3(startPos.x + distX, startPos.y + distY, startPos.z); // Flyttar objektet från startpositionen med så mycket parallax som är uträknat.
     }
 }
